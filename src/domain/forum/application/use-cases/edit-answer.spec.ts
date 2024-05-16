@@ -4,6 +4,7 @@ import { InMemoryAnswersRepository } from "test/repositories/in-memory-answers-r
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 
 import { EditAnswerUseCase } from "./edit-answer"
+import { NotAllowed } from "./errors/not-allowed"
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 let sut: EditAnswerUseCase
@@ -24,12 +25,13 @@ describe("EditAnswerUseCase", () => {
 
     await inMemoryAnswersRepository.create(newAnswer)
 
-    await sut.execute({
+    const result = await sut.execute({
       answerId: newAnswer.id.toValue(),
       authorId: "author-1",
       content: "Conteúdo teste",
     })
 
+    expect(result.isRight()).toBe(true)
     expect(inMemoryAnswersRepository.items[0]).toMatchObject({
       content: "Conteúdo teste",
     })
@@ -45,12 +47,13 @@ describe("EditAnswerUseCase", () => {
 
     await inMemoryAnswersRepository.create(newAnswer)
 
-    await expect(() => {
-      return sut.execute({
-        answerId: newAnswer.id.toValue(),
-        authorId: "author-2",
-        content: "Conteúdo teste",
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: newAnswer.id.toValue(),
+      authorId: "author-2",
+      content: "Conteúdo teste",
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowed)
   })
 })

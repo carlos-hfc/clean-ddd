@@ -6,6 +6,7 @@ import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questio
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 
 import { ChooseQuestionBestAnswerUseCase } from "./choose-question-best-answer"
+import { NotAllowed } from "./errors/not-allowed"
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
@@ -30,11 +31,12 @@ describe("ChooseQuestionBestAnswerUseCase", () => {
     await inMemoryQuestionsRepository.create(question)
     await inMemoryAnswersRepository.create(answer)
 
-    await sut.execute({
+    const result = await sut.execute({
       answerId: answer.id.toString(),
       authorId: question.authorId.toString(),
     })
 
+    expect(result.isRight()).toBe(true)
     expect(inMemoryQuestionsRepository.items[0].bestAnswerId).toEqual(answer.id)
   })
 
@@ -49,11 +51,12 @@ describe("ChooseQuestionBestAnswerUseCase", () => {
     await inMemoryQuestionsRepository.create(question)
     await inMemoryAnswersRepository.create(answer)
 
-    await expect(() => {
-      return sut.execute({
-        answerId: answer.id.toString(),
-        authorId: "author-2",
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: answer.id.toString(),
+      authorId: "author-2",
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowed)
   })
 })
