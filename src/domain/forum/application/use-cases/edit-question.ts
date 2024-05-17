@@ -1,13 +1,13 @@
 import { type Either, left, right } from "@/core/either"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { NotAllowed } from "@/core/errors/not-allowed"
+import { ResourceNotFound } from "@/core/errors/resource-not-found"
 
 import type { Question } from "../../enterprise/entities/question"
 import { QuestionAttachment } from "../../enterprise/entities/question-attachment"
 import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list"
 import type { QuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
 import type { QuestionsRepository } from "../repositories/questions-repository"
-import { NotAllowed } from "./errors/not-allowed"
-import { ResourceNotFound } from "./errors/resource-not-found"
 
 interface EditQuestionUseCaseRequest {
   authorId: string

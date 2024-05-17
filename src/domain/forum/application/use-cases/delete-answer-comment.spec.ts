@@ -2,9 +2,9 @@ import { makeAnswerComment } from "test/factories/make-answer-comment"
 import { InMemoryAnswerCommentsRepository } from "test/repositories/in-memory-answer-comments-repository"
 
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { NotAllowed } from "@/core/errors/not-allowed"
 
 import { DeleteAnswerCommentUseCase } from "./delete-answer-comment"
-import { NotAllowed } from "./errors/not-allowed"
 
 let inMemoryAnswerCommentsRepository: InMemoryAnswerCommentsRepository
 let sut: DeleteAnswerCommentUseCase

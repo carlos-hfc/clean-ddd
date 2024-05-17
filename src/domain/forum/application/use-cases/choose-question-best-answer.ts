@@ -1,10 +1,10 @@
 import { type Either, left, right } from "@/core/either"
+import { NotAllowed } from "@/core/errors/not-allowed"
+import { ResourceNotFound } from "@/core/errors/resource-not-found"
 
 import { Question } from "../../enterprise/entities/question"
 import type { AnswersRepository } from "../repositories/answers-repository"
 import type { QuestionsRepository } from "../repositories/questions-repository"
-import { NotAllowed } from "./errors/not-allowed"
-import { ResourceNotFound } from "./errors/resource-not-found"
 
 interface ChooseQuestionBestAnswerUseCaseRequest {
   authorId: string

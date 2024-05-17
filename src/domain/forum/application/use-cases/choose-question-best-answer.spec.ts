@@ -6,9 +6,9 @@ import { InMemoryQuestionAttachmentsRepository } from "test/repositories/in-memo
 import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questions-repository"
 
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { NotAllowed } from "@/core/errors/not-allowed"
 
 import { ChooseQuestionBestAnswerUseCase } from "./choose-question-best-answer"
-import { NotAllowed } from "./errors/not-allowed"
 
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
