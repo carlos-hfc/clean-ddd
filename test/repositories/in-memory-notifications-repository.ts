@@ -10,15 +10,9 @@ export class InMemoryNotificationsRepository
   //   return this.notifications.filter(item => item.recipientId === recipientId).length;
   // }
 
-  // async findById(notificationId: string): Promise<Notification | null> {
-  //   const notification = this.notifications.find(item => item.id === notificationId);
-
-  //   if (!notification) {
-  //     return null;
-  //   }
-
-  //   return notification;
-  // }
+  async findById(id: string): Promise<Notification | null> {
+    return this.items.find(item => item.id.toString() === id) ?? null
+  }
 
   // async findManyByRecipientId(recipientId: string): Promise<Notification[]> {
   //   return this.notifications.filter(item => item.recipientId === recipientId);
@@ -28,11 +22,9 @@ export class InMemoryNotificationsRepository
     this.items.push(notification)
   }
 
-  // async save(notification: Notification): Promise<void> {
-  //   const notificationIndex = this.notifications.findIndex(item => item.id === notification.id);
+  async save(notification: Notification): Promise<void> {
+    const itemIndex = this.items.findIndex(item => item.id === notification.id)
 
-  //   if (notificationIndex >= 0) {
-  //     this.notifications[notificationIndex] = notification;
-  //   }
-  // }
+    this.items[itemIndex] = notification
+  }
 }

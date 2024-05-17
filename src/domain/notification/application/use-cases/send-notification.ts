@@ -4,27 +4,27 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { Notification } from "../../enterprise/entities/notification"
 import type { NotificationsRepository } from "../repositories/notifications-repository"
 
-interface SendNotificationRequest {
+interface SendNotificationUseCaseRequest {
   recipientId: string
   title: string
   content: string
 }
 
-type SendNotificationResponse = Either<
+type SendNotificationUseCaseResponse = Either<
   null,
   {
     notification: Notification
   }
 >
 
-export class SendNotification {
+export class SendNotificationUseCase {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
   async execute({
     recipientId,
     title,
     content,
-  }: SendNotificationRequest): Promise<SendNotificationResponse> {
+  }: SendNotificationUseCaseRequest): Promise<SendNotificationUseCaseResponse> {
     const notification = Notification.create({
       recipientId: new UniqueEntityID(recipientId),
       title,
